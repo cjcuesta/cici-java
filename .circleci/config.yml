@@ -1,0 +1,21 @@
+version: 2.1
+
+jobs:
+  test:
+    working_directory: ~/app
+    docker:
+      - image: maven 
+    steps: 
+      - checkout
+      - run: 
+          name: generacion 
+          command: mvn clean package
+      - run: 
+          name: test 
+          command: mvn test
+
+workflows:
+  my-workflow:
+    jobs:
+      - test
+
