@@ -48,6 +48,7 @@ jobs:
           name: prueba GIT
           command: |
             echo "hola mundo" > notas.txt
+            git config user.email "cjcuesta@gmail.com"
             git add .
             git commit -m "Nuevo elemento"
             git push
