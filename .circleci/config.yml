@@ -1,5 +1,7 @@
 version: 2.1
 
+
+
 jobs:
   test:
     working_directory: ~/app
@@ -13,9 +15,13 @@ jobs:
       - run: 
           name: test 
           command: mvn test
+      - run:
+          name: Analyze on SonarCloud
+          command: mvn verify sonar:sonar -Dsonar.projectKey=cjcuesta_cici-java          
 
 workflows:
   my-workflow:
     jobs:
       - test
+          context: SonarCloud
 
