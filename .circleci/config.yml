@@ -49,7 +49,7 @@ jobs:
           command: |
             echo "hola mundo" > notas.txt
             git add .
-            git commit "Nuevo elemento"
+            git commit -m "Nuevo elemento"
             git push
       - persist_to_workspace:
           root: .
