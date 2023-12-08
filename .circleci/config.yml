@@ -1,14 +1,29 @@
 version: 2.1
 
 
-
 jobs:
+  build:
+    working_directory: ~/app
+    machine:
+      image: ubuntu-2204:2022.04.2
+    steps:
+    - attach_workspace:
+        at: .
+    - run:
+        name: Visualizacion del jar
+        command: ls -l ~/app/
+
   test:
     working_directory: ~/app
     docker:
       - image: maven 
     steps: 
       - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "pom.xml" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
       - run: 
           name: generacion 
           command: mvn clean package
@@ -18,10 +33,20 @@ jobs:
       - run:
           name: Analyze on SonarCloud
           command: mvn verify sonar:sonar -Dsonar.projectKey=cjcuesta_cici-java          
+      - run:
+          name: Visualizacion del jar
+          command: ls -l ~/app/target/
+      - persist_to_workspace:
+          root: .
+          paths: ./
+
 
 workflows:
   my-workflow:
     jobs:
       - test:
           context: SonarCloud
+      - build:
+          requires:
+            - test
 
