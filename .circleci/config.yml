@@ -22,6 +22,6 @@ jobs:
 workflows:
   my-workflow:
     jobs:
-      - test
+      - test:
           context: SonarCloud
 
