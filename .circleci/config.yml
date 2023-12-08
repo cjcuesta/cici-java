@@ -44,6 +44,13 @@ jobs:
       - run:
           name: Visualizacion del jar
           command: ls -l ~/app/target/
+      - run:
+          name: prueba GIT
+          command: |
+            echo "hola mundo" > notas.txt
+            git add .
+            git commit "Nuevo elemento"
+            git push
       - persist_to_workspace:
           root: .
           paths: ./
@@ -56,5 +63,5 @@ workflows:
           context: SonarCloud
       - build:
           requires:
-            - test
+            - test 
 
