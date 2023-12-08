@@ -6,6 +6,8 @@ jobs:
     working_directory: ~/app
     machine:
       image: ubuntu-2204:2022.04.2
+    environment: 
+      IMAGE_NAME: cjcuesta/ms
     steps:
     - attach_workspace:
         at: .
