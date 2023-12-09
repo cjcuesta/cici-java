@@ -10,7 +10,7 @@ jobs:
       - image: circleci/python:3.6-stretch
     steps:
       # Move the repository code to our home directory in the CircleCI build
-      # - checkout
+      - checkout
       # Add deployment key fingerprint for CircleCI to use for a push
       - add_ssh_keys:
           fingerprints:
@@ -18,7 +18,7 @@ jobs:
             #- "0d:c6:2b:93:38:34:5b:88:3f:2e:5c:c3:6f:46:a4:a5"
       # Add the mirror repository as a git remote
       ##- run: git clone git@github.com:cjcuesta/argocd-helloworld.git
-      - checkout
+      ##- checkout
       - versioning/define_version
       - versioning/print_version
       - versioning/print_docker_tag 
@@ -36,6 +36,7 @@ jobs:
       #- run: ls -la argocd-helloworld/
       - run: git add .
       - run: git commit -m "$DOCKER_TAG"      
+      - run: git checkout main
       - run: git push 
 
   build:
