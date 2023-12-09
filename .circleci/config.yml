@@ -9,16 +9,18 @@ jobs:
       # Move the repository code to our home directory in the CircleCI build
       - checkout
       # Add deployment key fingerprint for CircleCI to use for a push
+      - run: echo "hola mundo" >> nuevo.txt
       - add_ssh_keys:
           fingerprints:
             - "1f:cc:12:f5:25:e7:cc:3d:fb:3e:1e:f9:44:47:29:b3"
       # Add the mirror repository as a git remote
-      - run: echo "hola mundo" >> nuevo.txt
+      - run: git config user.email "cjcuesta@gmail.com"
+      - run: echo "hola mundo 2"      
+      - run: git config user.name "cjcuesta"
+      - run: echo "hola mundo 3"            
       - run: git add .
       - run: git commit -m "prueba"      
-      - run:
-          name: Updating inferentialthinking website
-          command: git push .
+      - run: git push
 
   build:
     working_directory: ~/app
