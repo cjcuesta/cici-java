@@ -37,7 +37,7 @@ jobs:
       #- run: ls -la argocd-helloworld/
       - run: git add .
       - run: git commit -m "$DOCKER_TAG"      
-      - run: git push 
+      - run: git push
 
   build:
     working_directory: ~/app
