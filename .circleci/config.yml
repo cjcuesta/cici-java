@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  versioning: kollex/versioning@1.0.0
+
 
 jobs:
   versiona:
@@ -16,6 +19,11 @@ jobs:
       # Add the mirror repository as a git remote
       ##- run: git clone git@github.com:cjcuesta/argocd-helloworld.git
       - checkout
+      - versioning/define_version
+      - versioning/print_version
+      - versioning/print_docker_tag
+      - run: echo $DOCKER_TAG
+      - run: echo $VERSION
       - run: ls -l 
       - run: git config user.email "cjcuesta@gmail.com"
       - run: echo "hola mundo 2"      
