@@ -20,7 +20,7 @@ jobs:
       - run: echo "hola mundo 3"            
       - run: git add .
       - run: git commit -m "prueba"      
-      - run: git push
+      - run: git push 
 
   build:
     working_directory: ~/app
