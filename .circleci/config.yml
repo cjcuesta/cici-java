@@ -7,7 +7,7 @@ jobs:
       - image: circleci/python:3.6-stretch
     steps:
       # Move the repository code to our home directory in the CircleCI build
-      - checkout
+      # - checkout
       # Add deployment key fingerprint for CircleCI to use for a push
       - run: echo "hola mundo" >> nuevo.txt
       - add_ssh_keys:
@@ -20,7 +20,7 @@ jobs:
       - run: echo "hola mundo 3"            
       - run: git add .
       - run: git commit -m "prueba"      
-      - run: git push 
+      ##- run: git push 
 
   build:
     working_directory: ~/app
@@ -72,10 +72,14 @@ jobs:
 workflows:
   my-workflow:
     jobs:
-      - versiona
-      - test:
-          context: SonarCloud
-      - build:
-          requires:
-            - test 
+      - versiona:
+          filters:
+            tags:
+              only: /.*/
+
+#      - test:
+#          context: SonarCloud
+#      - build:
+#          requires:
+#            - test 
 
