@@ -21,7 +21,7 @@ jobs:
       - checkout
       - versioning/define_version
       - versioning/print_version
-      - versioning/print_docker_tag
+      - versioning/print_docker_tag 
       - run: echo $DOCKER_TAG
       - run: echo $VERSION
       - run: ls -l 
