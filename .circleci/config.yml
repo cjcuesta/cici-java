@@ -14,10 +14,10 @@ jobs:
             #- "1f:cc:12:f5:25:e7:cc:3d:fb:3e:1e:f9:44:47:29:b3"
             - "0d:c6:2b:93:38:34:5b:88:3f:2e:5c:c3:6f:46:a4:a5"
       # Add the mirror repository as a git remote
+      - run: git clone git@github.com:cjcuesta/argocd-helloworld.git
       - run: git config user.email "cjcuesta@gmail.com"
       - run: echo "hola mundo 2"      
       - run: git config user.name "cjcuesta"
-      - run: git clone git@github.com:cjcuesta/argocd-helloworld.git
       - run: echo "hola mundo" >> nuevo.txt
       - run: echo "hola mundo 3"            
       - run: git add .
