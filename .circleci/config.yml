@@ -21,10 +21,11 @@ jobs:
       - run: echo "hola mundo 2"      
       - run: git config user.name "cjcuesta"
       - run: git clone git@github.com:cjcuesta/argocd-helloworld.git
-      - run: ls -l argocd-helloworld/
-      - run: cd argocd-helloworld/
+      - run: ls -la argocd-helloworld/
+      - run: cd argocd-helloworld
       - run: echo "hola mundo" >> nuevo.txt
-      - run: ls -l 
+      - run: ls -la 
+      - run: ls -la argocd-helloworld/
       ##- run: git add .
       ##- run: git commit -m "prueba"      
       ##- run: git push 
