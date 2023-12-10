@@ -32,6 +32,7 @@ jobs:
       #- run: git clone git@github.com:cjcuesta/argocd-helloworld.git
       #- run: ls -la argocd-helloworld/
       #- run: cd argocd-helloworld
+      #- AQUi fue
       - run: echo "cjcuesta/ms:$DOCKER_TAG" >> nuevo.txt
       - run: ls -la 
       #- run: ls -la argocd-helloworld/
