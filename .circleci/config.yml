@@ -5,12 +5,16 @@ orbs:
 
 
 jobs:
+
   versiona:
+    working_directory: ~/app1
     docker:
       - image: circleci/python:3.6-stretch
     steps:
       # Move the repository code to our home directory in the CircleCI build
-      - checkout
+      #- checkout
+      - attach_workspace:
+          at: .
       # Add deployment key fingerprint for CircleCI to use for a push
       - add_ssh_keys:
           fingerprints:
@@ -41,7 +45,7 @@ jobs:
         at: .
     - run:
         name: Visualizacion del jar
-        command: ls -l ~/app1/
+        command: ls -l ~/app1/target/
     - versioning/define_version        
     - run: 
         name: Publish Docker Image to Docker Hub
