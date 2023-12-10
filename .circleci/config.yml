@@ -96,9 +96,15 @@ workflows:
     jobs:
       - test:
           context: SonarCloud
+          filters:
+            tags:
+              only: /.*/
       - build:
           requires:
             - test 
+          filters:
+            tags:
+              only: /.*/
       - versiona:
           requires:
             - build
