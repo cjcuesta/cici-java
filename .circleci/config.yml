@@ -89,6 +89,7 @@ jobs:
 
 workflows:
   my-workflow:
+    when: << pipeline.git.tag >>  
     jobs:
       - versiona:
           filters:
