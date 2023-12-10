@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: app
-        image: cjcuesta/ms:v0.0.23
+        image: cjcuesta/ms:v0.0.26
         ports:
         - containerPort: 8080
