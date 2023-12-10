@@ -36,7 +36,7 @@ jobs:
       - run: echo "cjcuesta/ms:$DOCKER_TAG" >> nuevo.txt
       - run: |
              sed -e 's/image: cjcuesta\/ms:.*/image: cjcuesta\/ms:$DOCKER_TAG/g' -i app/deployment.yaml
-      - run: cat -la app/
+      - run: cat -la app/deployment.yaml
       #- run: ls -la argocd-helloworld/
       - run: git add .
       - run: git commit -m "$DOCKER_TAG"      
