@@ -26,14 +26,14 @@ jobs:
       - run: echo $VERSION
       - run: ls -l 
       - run: git config user.email "cjcuesta@gmail.com"
-      - run: echo "hola mundo 2"      
+      #- run: echo "hola mundo 2"      
       - run: git config user.name "cjcuesta"
       - run: git checkout main
       #- run: git clone git@github.com:cjcuesta/argocd-helloworld.git
       #- run: ls -la argocd-helloworld/
       #- run: cd argocd-helloworld
       #- AQUi fue
-      - run: echo "cjcuesta/ms:$DOCKER_TAG" >> nuevo.txt
+      #- run: echo "cjcuesta/ms:$DOCKER_TAG" >> nuevo.txt
       - run: |
              sed -e "s/image: cjcuesta\/ms:.*/image: cjcuesta\/ms:$DOCKER_TAG/g" -i app/deployment.yaml
       - run: cat app/deployment.yaml
@@ -43,7 +43,7 @@ jobs:
       - run: git push
 
   build:
-    working_directory: ~/app
+    working_directory: ~/app1
     machine:
       image: ubuntu-2204:2022.04.2
     environment: 
@@ -53,16 +53,17 @@ jobs:
         at: .
     - run:
         name: Visualizacion del jar
-        command: ls -l ~/app/
+        command: ls -l ~/app1/
+    - versioning/define_version        
     - run: 
         name: Publish Docker Image to Docker Hub
         command: |
           echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-          docker build -t $IMAGE_NAME:v2 .
-          docker push $IMAGE_NAME:v2        
+          docker build -t $IMAGE_NAME:$DOCKER_TAG .
+          docker push $IMAGE_NAME:$DOCKER_TAG        
 
   test:
-    working_directory: ~/app
+    working_directory: ~/app1
     docker:
       - image: maven 
     steps: 
@@ -83,7 +84,7 @@ jobs:
           command: mvn verify sonar:sonar -Dsonar.projectKey=cjcuesta_cici-java          
       - run:
           name: Visualizacion del jar
-          command: ls -l ~/app/target/
+          command: ls -l ~/app1/target/
       - persist_to_workspace:
           root: .
           paths: ./
@@ -93,14 +94,16 @@ workflows:
   my-workflow:
     when: << pipeline.git.tag >>  
     jobs:
+      - test:
+          context: SonarCloud
+      - build:
+          requires:
+            - test 
       - versiona:
+          requires:
+            - build
           filters:
             tags:
               only: /.*/
 
-#      - test:
-#          context: SonarCloud
-#      - build:
-#          requires:
-#            - test 
 
