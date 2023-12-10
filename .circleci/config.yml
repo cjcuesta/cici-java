@@ -14,7 +14,8 @@ jobs:
       # Add deployment key fingerprint for CircleCI to use for a push
       - add_ssh_keys:
           fingerprints:
-            - "1f:cc:12:f5:25:e7:cc:3d:fb:3e:1e:f9:44:47:29:b3"
+            #- "1f:cc:12:f5:25:e7:cc:3d:fb:3e:1e:f9:44:47:29:b3"
+            - "$GIT_FINGERPRINT"
             #- "0d:c6:2b:93:38:34:5b:88:3f:2e:5c:c3:6f:46:a4:a5"
       # Add the mirror repository as a git remote
       ##- run: git clone git@github.com:cjcuesta/argocd-helloworld.git
@@ -25,9 +26,10 @@ jobs:
       - run: echo $DOCKER_TAG
       - run: echo $VERSION 
       - run: ls -l 
-      - run: git config user.email "cjcuesta@gmail.com"
+      #- run: git config user.email "cjcuesta@gmail.com"
+      - run: git config user.email "$GIT_CORREO"
       #- run: echo "hola mundo 2"      
-      - run: git config user.name "cjcuesta"
+      - run: git config user.name "$GIT_USER"
       - run: git checkout main
       #- run: git clone git@github.com:cjcuesta/argocd-helloworld.git
       #- run: ls -la argocd-helloworld/
@@ -35,11 +37,11 @@ jobs:
       #- AQUi fue
       #- run: echo "cjcuesta/ms:$DOCKER_TAG" >> nuevo.txt
       - run: |
-             sed -e "s/image: cjcuesta\/ms:.*/image: cjcuesta\/ms:$DOCKER_TAG/g" -i app/deployment.yaml
+             sed -e "s/image: $DOCKERHUB_USERNAME\/ms:.*/image: $DOCKERHUB_USERNAME\/ms:$DOCKER_TAG/g" -i app/deployment.yaml
       - run: cat app/deployment.yaml
       #- run: ls -la argocd-helloworld/
       - run: git add .
-      - run: git commit -m "$DOCKER_TAG"      
+      - run: git commit -m "circleci $DOCKER_TAG"      
       - run: git push
 
   build:
@@ -59,7 +61,8 @@ jobs:
         name: Publish Docker Image to Docker Hub
         command: |
           echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-          docker build -t $IMAGE_NAME:$DOCKER_TAG .
+          ##docker build -t $IMAGE_NAME:$DOCKER_TAG .
+          docker build -t $DOCKERHUB_USERNAME/ms:$DOCKER_TAG .
           docker push $IMAGE_NAME:$DOCKER_TAG        
 
   test:
