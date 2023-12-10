@@ -7,14 +7,11 @@ orbs:
 jobs:
 
   versiona:
-    working_directory: ~/app1
     docker:
       - image: circleci/python:3.6-stretch
     steps:
       # Move the repository code to our home directory in the CircleCI build
-      #- checkout
-      - attach_workspace:
-          at: .
+      - checkout
       # Add deployment key fingerprint for CircleCI to use for a push
       - add_ssh_keys:
           fingerprints:
