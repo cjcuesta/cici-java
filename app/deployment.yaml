@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: app
-        image: cjcuesta/ms:$DOCKER_TAG
+        image: cjcuesta/ms:v0.0.20
         ports:
         - containerPort: 8080
