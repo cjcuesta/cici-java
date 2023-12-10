@@ -23,7 +23,7 @@ jobs:
       - versioning/print_version
       - versioning/print_docker_tag 
       - run: echo $DOCKER_TAG
-      - run: echo $VERSION
+      - run: echo $VERSION 
       - run: ls -l 
       - run: git config user.email "cjcuesta@gmail.com"
       #- run: echo "hola mundo 2"      
@@ -71,7 +71,7 @@ jobs:
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "pom.xml" }}
-          # fallback to using the latest cache if no exact match is found
+          # Si hay un cambio en las dependencias en proyectos java siempre van en el pom
           - v1-dependencies-
       - run: 
           name: generacion 
@@ -95,7 +95,7 @@ workflows:
     when: << pipeline.git.tag >>  
     jobs:
       - test:
-          context: SonarCloud
+          context: SonarCloud 
           filters:
             tags:
               only: /.*/
