@@ -34,7 +34,9 @@ jobs:
       #- run: cd argocd-helloworld
       #- AQUi fue
       - run: echo "cjcuesta/ms:$DOCKER_TAG" >> nuevo.txt
-      - run: ls -la 
+      - run: |
+             sed -e 's/image: cjcuesta\/ms:.*/image: cjcuesta\/ms:$DOCKER_TAG/g' -i app/deployment.yaml
+      - run: cat -la app/
       #- run: ls -la argocd-helloworld/
       - run: git add .
       - run: git commit -m "$DOCKER_TAG"      
