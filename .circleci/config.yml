@@ -14,32 +14,20 @@ jobs:
       # Add deployment key fingerprint for CircleCI to use for a push
       - add_ssh_keys:
           fingerprints:
-            #- "1f:cc:12:f5:25:e7:cc:3d:fb:3e:1e:f9:44:47:29:b3"
-            - "$GIT_FINGERPRINT"
+            - "1f:cc:12:f5:25:e7:cc:3d:fb:3e:1e:f9:44:47:29:b3"
             #- "0d:c6:2b:93:38:34:5b:88:3f:2e:5c:c3:6f:46:a4:a5"
-      # Add the mirror repository as a git remote
-      ##- run: git clone git@github.com:cjcuesta/argocd-helloworld.git
-      ##- checkout
       - versioning/define_version
       - versioning/print_version
       - versioning/print_docker_tag 
       - run: echo $DOCKER_TAG
       - run: echo $VERSION 
       - run: ls -l 
-      #- run: git config user.email "cjcuesta@gmail.com"
       - run: git config user.email "$GIT_CORREO"
-      #- run: echo "hola mundo 2"      
       - run: git config user.name "$GIT_USER"
       - run: git checkout main
-      #- run: git clone git@github.com:cjcuesta/argocd-helloworld.git
-      #- run: ls -la argocd-helloworld/
-      #- run: cd argocd-helloworld
-      #- AQUi fue
-      #- run: echo "cjcuesta/ms:$DOCKER_TAG" >> nuevo.txt
       - run: |
              sed -e "s/image: $DOCKERHUB_USERNAME\/ms:.*/image: $DOCKERHUB_USERNAME\/ms:$DOCKER_TAG/g" -i app/deployment.yaml
       - run: cat app/deployment.yaml
-      #- run: ls -la argocd-helloworld/
       - run: git add .
       - run: git commit -m "circleci $DOCKER_TAG"      
       - run: git push
@@ -48,8 +36,6 @@ jobs:
     working_directory: ~/app1
     machine:
       image: ubuntu-2204:2022.04.2
-    environment: 
-      IMAGE_NAME: cjcuesta/ms
     steps:
     - attach_workspace:
         at: .
